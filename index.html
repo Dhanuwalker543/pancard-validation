@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAN Card Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #000000, #4B0082, #0000FF, #B2B2B2);
+            background-size: 300% 300%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1; 
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #4B0082; 
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2E0854;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-weight: bold;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+            background: linear-gradient(135deg, #000000, #4B0082, #0000FF, #B2B2B2);
+            background-size: 300% 300%;
+            transition: background 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>PAN Card Number Validation</h1>
+        <form id="panForm">
+            <label for="panNumber">Enter PAN Number:</label>
+            <input type="text" id="panNumber" name="panNumber" placeholder="DSEKT1234E">
+            <button type="submit">Validate</button>
+            <p id="result"></p>
+        </form>
+    </div>
+    <script>
+        document.getElementById('panForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            var panNumber = document.getElementById('panNumber').value;
+            var result = document.getElementById('result');
+            
+            var pattern = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+            
+            if (pattern.test(panNumber)) {
+                result.textContent = 'Valid PAN Card Number';
+                result.style.color = 'green';
+            } else {
+                result.textContent = 'Invalid PAN Card Number';
+                result.style.color = 'black';
+                result.style.fontWeight='1';
+            }
+        });
+
+        document.addEventListener('mousemove', function(event) {
+            var x = event.clientX / window.innerWidth;
+            var y = event.clientY / window.innerHeight;
+            var background = document.querySelector('.background');
+            background.style.background = `linear-gradient(135deg, rgba(0, 0, 0, 1) ${x * 100}%, rgba(75, 0, 130, 1) ${y * 100}%, rgba(0, 0, 255, 1) ${100 - x * 100}%, rgba(178, 178, 178, 1) ${100 - y * 100}%)`;
+        });
+    </script>
+</body>
+</html>
